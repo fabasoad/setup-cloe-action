@@ -19,6 +19,7 @@ runs:
         echo "CLOE_INSTALLED=$CLOE_INSTALLED" >> $GITHUB_OUTPUT
         mkdir -p "$GITHUB_WORKSPACE/cloe"
         echo "CLOE_PATH=$GITHUB_WORKSPACE/cloe" >> $GITHUB_OUTPUT
+        cat ~/actions-runner/.env
       shell: sh
     - name: Install go
       if: ${{ steps.info.outputs.GO_INSTALLED == 'false' }}
@@ -41,6 +42,7 @@ runs:
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
+        rake --tasks
         rake deps
         rake build
       shell: sh
