@@ -14,7 +14,7 @@ runs:
         # Go
         GO_INSTALLED=$(if command -v go >/dev/null 2>&1; then echo true; else echo false; fi)
         echo "GO_INSTALLED=$GO_INSTALLED" >> $GITHUB_OUTPUT
-        if [[ $GO_INSTALLED == 'false' ]]; then
+        if [[ "$GO_INSTALLED" == "false" ]]; then
           if [[ "${{ runner.os }}" == "Linux" ]]; then
             BIN_1=linux
           elif [[ "${{ runner.os }}" == "macOS" ]]; then
@@ -54,6 +54,7 @@ runs:
         ls -A
         echo "${{ steps.info.outputs.GO_PATH }}" >> $GITHUB_PATH
       shell: sh
+      working-directory: ${{ steps.info.outputs.GO_PATH }}
     - name: Download Cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       uses: actions/checkout@v3
@@ -65,8 +66,7 @@ runs:
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
         rake build
-        ls -A ${{ steps.info.outputs.CLOE_PATH }}/bin
-        echo "${{ steps.info.outputs.CLOE_PATH }}/bin" >> $GITHUB_PATH
+        echo "$(pwd)/bin" >> $GITHUB_PATH
       shell: sh
       working-directory: ${{ steps.info.outputs.CLOE_PATH }}
 #    - name: Install cloe
