@@ -25,13 +25,7 @@ runs:
         path: cloe
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
-      run: |
-        echo "before"
-        rake --version
-        rake --tasks
-        echo "after"
-#        rake deps
-#        rake build
+      run: rake build
       shell: sh
       working-directory: ${{ steps.info.outputs.CLOE_PATH }}
 #    - name: Install cloe
