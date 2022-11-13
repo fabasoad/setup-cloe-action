@@ -46,13 +46,7 @@ runs:
         DOWNLOAD_URL: https://go.dev/dl/go1.19.3.${{ steps.info.outputs.GO_BINARY }}.tar.gz 
       run: |
         wget -c $DOWNLOAD_URL -O - | tar -xz --strip-components 1
-        if [[ "${{ runner.os }}" == "Linux" ]]; then
-          cd "${{ steps.info.outputs.GO_PATH }}/bin"
-          chmod +x ./go
-          chmod +x ./gofmt
-        fi
         echo "${{ steps.info.outputs.GO_PATH }}/bin" >> $GITHUB_PATH
-        echo "GOPATH=${{ steps.info.outputs.GO_PATH }}" >> $GITHUB_ENV
       shell: sh
       working-directory: ${{ steps.info.outputs.GO_PATH }}
     - name: Download Cloe
