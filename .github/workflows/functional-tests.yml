@@ -1,0 +1,40 @@
+---
+name: Functional Tests
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+
+jobs:
+  setup-cloe:
+    name: Setup cloe
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Cloe
+        uses: ./
+      - name: Print version
+        run: cloe hello-world.cloe
+        shell: sh
+  setup-cloe-alpine:
+    name: Setup cloe (alpine-latest)
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    container:
+      image: alpine:latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Cloe
+        uses: ./
+      - name: Print version
+        run: |
+          cloe --version
+          cloe hello-world.cloe
+        shell: sh

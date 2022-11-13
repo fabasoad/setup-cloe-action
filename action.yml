@@ -1,0 +1,23 @@
+---
+name: 'Setup Cloe'
+author: Yevhen Fabizhevskyi
+description: 'This action installs cloe.'
+branding:
+  icon: terminal
+  color: gray-dark
+runs:
+  using: 'composite'
+  steps:
+    - name: Collect info
+      id: info
+      run: |
+        CLOE_INSTALLED=$(if command -v cloe >/dev/null 2>&1; then echo true; else echo false; fi)
+        echo "CLOE_INSTALLED=$CLOE_INSTALLED" >> $GITHUB_OUTPUT
+        mkdir -p "$GITHUB_WORKSPACE/cloe"
+        echo "CLOE_PATH=$GITHUB_WORKSPACE/cloe" >> $GITHUB_OUTPUT
+      shell: sh
+    - name: Install cloe
+      if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
+      run: go get -u github.com/cloe-lang/cloe
+      shell: sh
+      working-directory: ${{ steps.info.outputs.CLOE_PATH }}
