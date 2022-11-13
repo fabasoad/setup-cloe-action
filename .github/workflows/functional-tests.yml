@@ -21,20 +21,8 @@ jobs:
       - name: Setup Cloe
         uses: ./
       - name: Print version
-        run: cloe hello-world.cloe
+        run: cloe --version
         shell: sh
-  setup-cloe-alpine:
-    name: Setup cloe (alpine-latest)
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    container:
-      image: alpine:latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Cloe
-        uses: ./
-      - name: Print version
-        run: |
-          cloe --version
-          cloe hello-world.cloe
+      - name: Run script
+        run: cloe hello-world.cloe
         shell: sh

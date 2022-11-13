@@ -16,8 +16,17 @@ runs:
         mkdir -p "$GITHUB_WORKSPACE/cloe"
         echo "CLOE_PATH=$GITHUB_WORKSPACE/cloe" >> $GITHUB_OUTPUT
       shell: sh
+    - name: Download Cloe
+      if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
+      uses: actions/checkout@v3
+      with:
+        repository: cloe-lang/cloe
+        fetch-depth: 1
+        path: cloe
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
-      run: go get -u github.com/cloe-lang/cloe
+      run: |
+        rake build
+        echo "$(pwd)/bin" >> $GITHUB_PATH
       shell: sh
       working-directory: ${{ steps.info.outputs.CLOE_PATH }}
