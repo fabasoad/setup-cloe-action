@@ -46,7 +46,12 @@ runs:
         DOWNLOAD_URL: https://go.dev/dl/go1.19.3.${{ steps.info.outputs.GO_BINARY }}.tar.gz 
       run: |
         wget -c $DOWNLOAD_URL -O - | tar -xz --strip-components 1
-        echo "$(pwd)/bin" >> $GITHUB_PATH
+        if [[ "${{ runner.os }}" == "Linux" ]]; then
+          cd "${{ steps.info.outputs.GO_PATH }}/bin"
+          chmod +x go
+          chmod +x gofmt
+        fi
+        echo "${{ steps.info.outputs.GO_PATH }}/bin" >> $GITHUB_PATH
       shell: sh
       working-directory: ${{ steps.info.outputs.GO_PATH }}
     - name: Download Cloe
@@ -59,7 +64,6 @@ runs:
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
-        ls -A ${{ steps.info.outputs.GO_PATH }}/bin
         go version
         rake build
         echo "$(pwd)/bin" >> $GITHUB_PATH
