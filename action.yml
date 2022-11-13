@@ -67,5 +67,5 @@ runs:
         go version
         rake build
         echo "$(pwd)/bin" >> $GITHUB_PATH
-      shell: sh
+      shell: bash
       working-directory: ${{ steps.info.outputs.CLOE_PATH }}
