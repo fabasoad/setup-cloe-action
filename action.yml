@@ -52,6 +52,7 @@ runs:
           chmod +x ./gofmt
         fi
         echo "${{ steps.info.outputs.GO_PATH }}/bin" >> $GITHUB_PATH
+        echo "GOPATH=${{ steps.info.outputs.GO_PATH }}" >> $GITHUB_ENV
       shell: sh
       working-directory: ${{ steps.info.outputs.GO_PATH }}
     - name: Download Cloe
