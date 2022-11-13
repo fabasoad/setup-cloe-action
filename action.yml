@@ -40,15 +40,20 @@ runs:
         mkdir -p "$GITHUB_WORKSPACE/cloe"
         echo "CLOE_PATH=$GITHUB_WORKSPACE/cloe" >> $GITHUB_OUTPUT
       shell: sh
+#    - name: Install go
+#      if: ${{ steps.info.outputs.GO_INSTALLED == 'false' }}
+#      env:
+#        DOWNLOAD_URL: https://go.dev/dl/go1.19.3.${{ steps.info.outputs.GO_BINARY }}.tar.gz 
+#      run: |
+#        wget -c $DOWNLOAD_URL -O - | tar -xz --strip-components 1
+#        echo "${{ steps.info.outputs.GO_PATH }}/bin" >> $GITHUB_PATH
+#      shell: sh
+#      working-directory: ${{ steps.info.outputs.GO_PATH }}
     - name: Install go
       if: ${{ steps.info.outputs.GO_INSTALLED == 'false' }}
-      env:
-        DOWNLOAD_URL: https://go.dev/dl/go1.19.3.${{ steps.info.outputs.GO_BINARY }}.tar.gz 
-      run: |
-        wget -c $DOWNLOAD_URL -O - | tar -xz --strip-components 1
-        echo "${{ steps.info.outputs.GO_PATH }}/bin" >> $GITHUB_PATH
-      shell: sh
-      working-directory: ${{ steps.info.outputs.GO_PATH }}
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.19.3
     - name: Download Cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       uses: actions/checkout@v3
