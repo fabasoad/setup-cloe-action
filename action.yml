@@ -13,7 +13,7 @@ runs:
       run: |
         GO_INSTALLED=$(if command -v go >/dev/null 2>&1; then echo true; else echo false; fi)
         echo "GO_INSTALLED=$GO_INSTALLED" >> $GITHUB_OUTPUT
-        if ! command -v go &> /dev/null
+        if [[ ! command -v go &> /dev/null ]]; then
           if [[ "${{ runner.os }}" == "Linux" ]]; then
             GO_BIN_1=linux
           elif [[ "${{ runner.os }}" == "macOS" ]]; then
