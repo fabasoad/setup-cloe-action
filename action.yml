@@ -27,6 +27,7 @@ runs:
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
         echo "before"
+        rake --version
         rake --tasks
         echo "after"
 #        rake deps
