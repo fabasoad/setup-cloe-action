@@ -46,8 +46,11 @@ runs:
         DOWNLOAD_URL: https://go.dev/dl/go1.19.3.${{ steps.info.outputs.GO_BINARY }}.tar.gz 
       run: |
         wget -c $DOWNLOAD_URL -O - | tar -xz
-        ls -A
-        echo "${{ steps.info.outputs.GO_PATH }}" >> $GITHUB_PATH
+        echo "ls -A ./go"
+        ls -A ./go
+        echo "ls -A ./go/bin"
+        ls -A ./go/bin
+        echo "${{ steps.info.outputs.GO_PATH }}/go/bin" >> $GITHUB_PATH
       shell: sh
       working-directory: ${{ steps.info.outputs.GO_PATH }}
     - name: Download Cloe
