@@ -18,6 +18,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.19.3'
       - name: Setup Cloe
         uses: ./
       - name: Print version
@@ -31,6 +34,9 @@ jobs:
       image: alpine:latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.19.3'
       - name: Setup Cloe
         uses: ./
       - name: Print version
