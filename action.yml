@@ -39,7 +39,7 @@ runs:
         echo "CLOE_INSTALLED=$CLOE_INSTALLED" >> $GITHUB_OUTPUT
         mkdir -p "$GITHUB_WORKSPACE/cloe"
         echo "CLOE_PATH=$GITHUB_WORKSPACE/cloe" >> $GITHUB_OUTPUT
-      shell: sh
+      shell: bash
 #    - name: Install go
 #      if: ${{ steps.info.outputs.GO_INSTALLED == 'false' }}
 #      env:
