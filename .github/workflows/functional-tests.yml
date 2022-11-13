@@ -21,5 +21,7 @@ jobs:
       - name: Setup Cloe
         uses: ./
       - name: Print version
-        run: cloe hello-world.cloe
+        run: |
+          cloe --version
+          cloe hello-world.cloe
         shell: sh

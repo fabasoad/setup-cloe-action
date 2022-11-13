@@ -22,7 +22,7 @@ on: push
 
 jobs:
   setup:
-    name: yorick
+    name: cloe
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
