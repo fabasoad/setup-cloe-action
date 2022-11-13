@@ -18,9 +18,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
-        with:
-          go-version: '1.18.8'
       - name: Setup Cloe
         uses: ./
       - name: Print version
@@ -31,7 +28,7 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     container:
-      image: golang:1.18-alpine
+      image: golang:1.19-alpine
     steps:
       - uses: actions/checkout@v3
       - name: Setup Cloe

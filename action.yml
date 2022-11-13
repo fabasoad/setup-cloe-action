@@ -11,13 +11,42 @@ runs:
     - name: Collect info
       id: info
       run: |
+        GO_INSTALLED=$(if command -v go >/dev/null 2>&1; then echo true; else echo false; fi)
+        echo "GO_INSTALLED=$GO_INSTALLED" >> $GITHUB_OUTPUT
+        RAKE_INSTALLED=$(if command -v rake >/dev/null 2>&1; then echo true; else echo false; fi)
+        echo "RAKE_INSTALLED=$RAKE_INSTALLED" >> $GITHUB_OUTPUT
         CLOE_INSTALLED=$(if command -v cloe >/dev/null 2>&1; then echo true; else echo false; fi)
         echo "CLOE_INSTALLED=$CLOE_INSTALLED" >> $GITHUB_OUTPUT
         mkdir -p "$GITHUB_WORKSPACE/cloe"
         echo "CLOE_PATH=$GITHUB_WORKSPACE/cloe" >> $GITHUB_OUTPUT
       shell: sh
+    - name: Install go
+      if: ${{ steps.info.outputs.GO_INSTALLED == 'false' }}
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.19.3'
+    - name: Install ruby
+      if: ${{ steps.info.outputs.RAKE_INSTALLED == 'false' }}
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+        ruby-version: 3.1.2
+    - name: Download Cloe
+      if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
+      uses: actions/checkout@v3
+      with:
+        repository: cloe-lang/cloe
+        fetch-depth: 1
+        path: cloe
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
-      run: go install github.com/cloe-lang/cloe@latest
+      run: |
+        rake deps
+        rake build
       shell: sh
       working-directory: ${{ steps.info.outputs.CLOE_PATH }}
+#    - name: Install cloe
+#      if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
+#      run: go install github.com/cloe-lang/cloe@latest
+#      shell: sh
+#      working-directory: ${{ steps.info.outputs.CLOE_PATH }}
