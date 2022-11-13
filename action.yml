@@ -48,8 +48,8 @@ runs:
         wget -c $DOWNLOAD_URL -O - | tar -xz --strip-components 1
         if [[ "${{ runner.os }}" == "Linux" ]]; then
           cd "${{ steps.info.outputs.GO_PATH }}/bin"
-          chmod +x go
-          chmod +x gofmt
+          chmod +x ./go
+          chmod +x ./gofmt
         fi
         echo "${{ steps.info.outputs.GO_PATH }}/bin" >> $GITHUB_PATH
       shell: sh
@@ -64,10 +64,10 @@ runs:
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
-        cd "${{ steps.info.outputs.GO_PATH }}/bin"
-        ls -A
-        chmod +x go
-        ./go version
+#        cd "${{ steps.info.outputs.GO_PATH }}/bin"
+#        ls -A
+#        chmod +x go
+        go version
         rake build
         echo "$(pwd)/bin" >> $GITHUB_PATH
       shell: sh
