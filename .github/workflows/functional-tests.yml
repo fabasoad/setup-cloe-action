@@ -31,6 +31,11 @@ jobs:
       image: golang:1.19-alpine
     steps:
       - uses: actions/checkout@v3
+      - name: Install ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: 3.1.2
       - name: Setup Cloe
         uses: ./
       - name: Print version
