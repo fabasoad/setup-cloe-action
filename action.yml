@@ -59,8 +59,7 @@ runs:
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
-        echo $PATH
-        ${{ steps.info.outputs.GO_PATH }}/bin/go version
+        ls -A ${{ steps.info.outputs.GO_PATH }}/bin
         go version
         rake build
         echo "$(pwd)/bin" >> $GITHUB_PATH
