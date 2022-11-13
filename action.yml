@@ -24,9 +24,9 @@ runs:
           fi
           if [[ "${{ runner.arch }}" == "X86" ]]; then
             BIN_2=386
-          elif [[ "${{ runner.os }}" == "X64" ]]; then
+          elif [[ "${{ runner.arch }}" == "X64" ]]; then
             BIN_2=amd64
-          elif [[ "${{ runner.os }}" == "ARM64" ]]; then
+          elif [[ "${{ runner.arch }}" == "ARM64" ]]; then
             BIN_2=arm64
           else
             echo "::error title=Unsupported OS::${{ runner.os }} ${{ runner.arch }} is not supported"
@@ -64,11 +64,9 @@ runs:
     - name: Install cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
-        echo "before (cloe)"
-        ls -A
         rake build
-        echo "after (cloe)"
-        ls -A
+        ls -A ${{ steps.info.outputs.CLOE_PATH }}/bin
+        echo "${{ steps.info.outputs.CLOE_PATH }}/bin" >> $GITHUB_PATH
       shell: sh
       working-directory: ${{ steps.info.outputs.CLOE_PATH }}
 #    - name: Install cloe
