@@ -31,10 +31,6 @@ jobs:
       image: ruby:3.1-alpine
     steps:
       - uses: actions/checkout@v3
-      - name: Install go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.19
       - name: Setup Cloe
         uses: ./
       - name: Print version

@@ -17,16 +17,16 @@ runs:
         if [[ $GO_INSTALLED == 'false' ]]; then
           if [[ "${{ runner.os }}" == "Linux" ]]; then
             BIN_1=linux
-          elif [[ "${{ runner.os }}" == "macOS" ]]
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
             BIN_1=darwin
           else
             BIN_1=windows
           fi
           if [[ "${{ runner.arch }}" == "X86" ]]; then
             BIN_2=386
-          elif [[ "${{ runner.os }}" == "X64" ]]
+          elif [[ "${{ runner.os }}" == "X64" ]]; then
             BIN_2=amd64
-          elif [[ "${{ runner.os }}" == "ARM64" ]]
+          elif [[ "${{ runner.os }}" == "ARM64" ]]; then
             BIN_2=arm64
           else
             echo "::error title=Unsupported OS::${{ runner.os }} ${{ runner.arch }} is not supported"
