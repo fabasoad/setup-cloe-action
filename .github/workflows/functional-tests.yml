@@ -1,11 +1,15 @@
 ---
 name: Functional Tests
 
-on:
+on:  # yamllint disable-line rule:truthy
   push:
     branches:
       - 'main'
   pull_request:
+
+defaults:
+  run:
+    shell: sh
 
 jobs:
   setup-cloe:
@@ -22,7 +26,5 @@ jobs:
         uses: ./
       - name: Print version
         run: cloe --version
-        shell: sh
       - name: Run script
         run: cloe hello-world.cloe
-        shell: sh
