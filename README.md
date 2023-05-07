@@ -30,7 +30,6 @@ jobs:
       - uses: fabasoad/setup-cloe-action@main
       - name: Print version
         run: cloe --version
-        shell: sh
 ```
 
 ### Result
