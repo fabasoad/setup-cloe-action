@@ -1,12 +1,12 @@
 ---
-name: 'Setup Cloe'
+name: "Setup Cloe"
 author: Yevhen Fabizhevskyi
-description: 'This action installs cloe.'
+description: "This action installs cloe."
 branding:
   icon: terminal
   color: gray-dark
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Collect info
       id: info
