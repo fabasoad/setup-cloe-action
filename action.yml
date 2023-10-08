@@ -18,7 +18,7 @@ runs:
       shell: sh
     - name: Download Cloe
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: cloe-lang/cloe
         fetch-depth: 1
