@@ -27,6 +27,6 @@ runs:
       if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
       run: |
         rake build
-        echo "$(pwd)/bin" >> $GITHUB_PATH
+        echo "$(pwd)/bin" >> "$GITHUB_PATH"
       shell: sh
       working-directory: ${{ steps.info.outputs.CLOE_PATH }}
