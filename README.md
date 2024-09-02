@@ -9,6 +9,19 @@
 
 This action installs a [Cloe](https://cloe-lang.org).
 
+## Supported OS
+
+<!-- prettier-ignore-start -->
+| OS      | Arch   |                    |
+|---------|--------|--------------------|
+| Windows | x86_84 | :white_check_mark: |
+| Windows | arm    | :x:                |
+| Linux   | x86_84 | :white_check_mark: |
+| Linux   | arm    | :x:                |
+| macOS   | x86_84 | :white_check_mark: |
+| macOS   | arm    | :x:                |
+<!-- prettier-ignore-end -->
+
 ## Prerequisites
 
 The following tools have to be installed for successful work of this GitHub action:
