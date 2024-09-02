@@ -2,11 +2,25 @@
 
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ![GitHub release](https://img.shields.io/github/v/release/fabasoad/setup-cloe-action?include_prereleases)
-![functional-tests](https://github.com/fabasoad/setup-cloe-action/actions/workflows/functional-tests.yml/badge.svg)
+![functional-tests-local](https://github.com/fabasoad/setup-cloe-action/actions/workflows/functional-tests-local.yml/badge.svg)
+![functional-tests-remote](https://github.com/fabasoad/setup-cloe-action/actions/workflows/functional-tests-remote.yml/badge.svg)
 ![security](https://github.com/fabasoad/setup-cloe-action/actions/workflows/security.yml/badge.svg)
 ![linting](https://github.com/fabasoad/setup-cloe-action/actions/workflows/linting.yml/badge.svg)
 
 This action installs a [Cloe](https://cloe-lang.org).
+
+## Supported OS
+
+<!-- prettier-ignore-start -->
+| OS      | Arch   |                    |
+|---------|--------|--------------------|
+| Windows | x86_84 | :white_check_mark: |
+| Windows | arm    | :x:                |
+| Linux   | x86_84 | :white_check_mark: |
+| Linux   | arm    | :x:                |
+| macOS   | x86_84 | :white_check_mark: |
+| macOS   | arm    | :x:                |
+<!-- prettier-ignore-end -->
 
 ## Prerequisites
 

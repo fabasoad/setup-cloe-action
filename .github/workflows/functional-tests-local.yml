@@ -1,11 +1,8 @@
 ---
-name: Functional Tests
+name: Functional Tests (Local)
 
 on: # yamllint disable-line rule:truthy
-  push:
-    branches:
-      - "main"
-  pull_request:
+  pull_request: {}
 
 defaults:
   run:
@@ -18,8 +15,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "macos", "windows"]
-    runs-on: ${{ matrix.os }}-latest
+        runner: ["ubuntu-latest", "macos-12", "windows-latest"]
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4

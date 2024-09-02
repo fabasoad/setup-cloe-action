@@ -1,0 +1,30 @@
+---
+name: Functional Tests (Remote)
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: sh
+
+jobs:
+  setup-cloe:
+    name: Setup cloe
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: ["ubuntu-latest", "macos-12", "windows-latest"]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+      - name: Setup Cloe
+        uses: fabasoad/setup-cloe-action@main
+      - name: Print version
+        run: cloe --version
+      - name: Run script
+        run: cloe hello-world.cloe

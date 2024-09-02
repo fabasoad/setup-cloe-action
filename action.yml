@@ -11,22 +11,22 @@ runs:
     - name: Collect info
       id: info
       run: |
-        CLOE_INSTALLED=$(if command -v cloe >/dev/null 2>&1; then echo true; else echo false; fi)
-        echo "CLOE_INSTALLED=${CLOE_INSTALLED}" >> "${GITHUB_OUTPUT}"
+        cloe_installed=$(if command -v cloe >/dev/null 2>&1; then echo true; else echo false; fi)
+        echo "cloe-installed=${cloe_installed}" >> "${GITHUB_OUTPUT}"
         mkdir -p "${GITHUB_WORKSPACE}/cloe"
-        echo "CLOE_PATH=${GITHUB_WORKSPACE}/cloe" >> "${GITHUB_OUTPUT}"
+        echo "cloe-path=${GITHUB_WORKSPACE}/cloe" >> "${GITHUB_OUTPUT}"
       shell: sh
     - name: Download Cloe
-      if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
+      if: ${{ steps.info.outputs.cloe-installed == 'false' }}
       uses: actions/checkout@v4
       with:
         repository: cloe-lang/cloe
         fetch-depth: 1
         path: cloe
     - name: Install cloe
-      if: ${{ steps.info.outputs.CLOE_INSTALLED == 'false' }}
+      if: ${{ steps.info.outputs.cloe-installed == 'false' }}
       run: |
         rake build
         echo "$(pwd)/bin" >> "$GITHUB_PATH"
       shell: sh
-      working-directory: ${{ steps.info.outputs.CLOE_PATH }}
+      working-directory: ${{ steps.info.outputs.cloe-path }}
