@@ -1,0 +1,28 @@
+---
+name: Functional Tests (Local)
+
+on: # yamllint disable-line rule:truthy
+  pull_request: {}
+
+defaults:
+  run:
+    shell: sh
+
+jobs:
+  setup-cloe:
+    name: Setup cloe
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu", "macos", "windows"]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+      - name: Setup Cloe
+        uses: ./
+      - name: Print version
+        run: cloe --version
+      - name: Run script
+        run: cloe hello-world.cloe

@@ -1,11 +1,10 @@
 ---
-name: Functional Tests
+name: Functional Tests (Remote)
 
 on: # yamllint disable-line rule:truthy
   push:
     branches:
-      - "main"
-  pull_request:
+      - main
 
 defaults:
   run:
@@ -24,7 +23,7 @@ jobs:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
       - name: Setup Cloe
-        uses: ./
+        uses: fabasoad/setup-cloe-action@main
       - name: Print version
         run: cloe --version
       - name: Run script
