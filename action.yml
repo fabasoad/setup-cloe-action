@@ -5,28 +5,44 @@ description: "This action installs cloe."
 branding:
   icon: terminal
   color: gray-dark
+inputs:
+  force:
+    description: |
+      If "false" skips installation if cloe is already installed. If "true"
+      installs cloe in any case. Defaults to "false".
+    required: false
+    default: "false"
+outputs:
+  installed:
+    description: Whether cloe was installed or not.
+    value: "${{ steps.install-cloe.outcome == 'success' }}"
 runs:
   using: "composite"
   steps:
     - name: Collect info
       id: info
-      run: |
-        cloe_installed=$(if command -v cloe >/dev/null 2>&1; then echo true; else echo false; fi)
-        echo "cloe-installed=${cloe_installed}" >> "${GITHUB_OUTPUT}"
-        mkdir -p "${GITHUB_WORKSPACE}/cloe"
-        echo "cloe-path=${GITHUB_WORKSPACE}/cloe" >> "${GITHUB_OUTPUT}"
+      env:
+        INPUT_FORCE: "${{ inputs.force }}"
+      run: ./collect-info.sh "${INPUT_FORCE}"
       shell: sh
+
     - name: Download Cloe
-      if: ${{ steps.info.outputs.cloe-installed == 'false' }}
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
       uses: actions/checkout@v4
       with:
         repository: cloe-lang/cloe
         fetch-depth: 1
-        path: cloe
+        path: ${{ steps.info.outputs.bin-dir }}
+
     - name: Install cloe
-      if: ${{ steps.info.outputs.cloe-installed == 'false' }}
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
+      id: install-cloe
       run: |
         rake build
         echo "$(pwd)/bin" >> "$GITHUB_PATH"
       shell: sh
-      working-directory: ${{ steps.info.outputs.cloe-path }}
+      working-directory: ${{ steps.info.outputs.bin-path }}
+
+    - name: Print version
+      run: cloe --version
+      shell: sh
