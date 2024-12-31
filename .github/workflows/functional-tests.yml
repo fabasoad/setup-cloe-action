@@ -22,12 +22,12 @@ defaults:
 jobs:
   setup-cloe:
     name: Setup cloe
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "windows", "macos"]
+        runner: ["ubuntu-latest", "windows-latest", "macos-13"]
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4

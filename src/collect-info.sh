@@ -7,6 +7,8 @@ LIB_DIR_PATH="${SRC_DIR_PATH}/lib"
 . "${LIB_DIR_PATH}/logging.sh"
 
 main() {
+  input_force="${1}"
+
   bin_installed="false"
   if command -v cloe >/dev/null 2>&1; then
     if [ "${input_force}" = "false" ]; then
