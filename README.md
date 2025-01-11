@@ -69,3 +69,7 @@ jobs:
 Run cloe --version
 0.1.0
 ```
+
+## Contributions
+
+![Alt](https://repobeats.axiom.co/api/embed/d0d2977d810a77b65f50e969ab57ef7364fa9306.svg "Repobeats analytics image")
