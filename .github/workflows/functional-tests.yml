@@ -57,8 +57,9 @@ jobs:
           test_equal "cloe should be installed" \
             "${{ steps.setup-cloe.outputs.installed }}" \
             "true"
-      - name: Run script
-        run: cloe hello-world.cloe
+      - name: Validate command
+        run: |
+          [ "$(cloe hello-world.cloe 2>&1)" = '"Hello, world!"' ] || exit 1
   test-force:
     name: Test force
     runs-on: ubuntu-latest

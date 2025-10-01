@@ -43,7 +43,7 @@ runs:
         path: ${{ steps.info.outputs.bin-dir }}
 
     - name: Setup Go
-      if: runner.os == 'macOS' && startsWith(runner.arch, 'X')
+      if: steps.info.outputs.bin-installed == 'false' && steps.info.outputs.go-installed == 'false'
       uses: actions/setup-go@v6
       with:
         go-version-file: "${{ steps.info.outputs.bin-path }}/go.mod"
