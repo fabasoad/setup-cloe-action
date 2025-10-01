@@ -36,11 +36,17 @@ runs:
 
     - name: Download Cloe
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: cloe-lang/cloe
         fetch-depth: 1
         path: ${{ steps.info.outputs.bin-dir }}
+
+    - name: Setup Go
+      if: steps.info.outputs.bin-installed == 'false' && steps.info.outputs.go-installed == 'false'
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: "${{ steps.info.outputs.bin-path }}/go.mod"
 
     - name: Install cloe
       if: ${{ steps.info.outputs.bin-installed == 'false' }}

@@ -21,16 +21,28 @@ defaults:
 
 jobs:
   setup-cloe:
-    name: Setup cloe
-    runs-on: ${{ matrix.os }}-latest
-    timeout-minutes: 5
+    name: Setup cloe (${{ matrix.name }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "windows"]
+        include:
+          - name: Linux x86_64
+            runner: ubuntu-24.04
+          - name: Linux ARM
+            runner: ubuntu-24.04-arm
+          - name: Windows x86_64
+            runner: windows-2025
+          - name: Windows ARM
+            runner: windows-11-arm
+          - name: macOS x86_64
+            runner: macos-15-intel
+          - name: macOS ARM
+            runner: macos-15
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup cloe
         id: setup-cloe
         uses: ./
@@ -45,19 +57,20 @@ jobs:
           test_equal "cloe should be installed" \
             "${{ steps.setup-cloe.outputs.installed }}" \
             "true"
-      - name: Run script
-        run: cloe hello-world.cloe
+      - name: Validate command
+        run: |
+          [ "$(cloe hello-world.cloe 2>&1)" = "Hello, world!" ] || exit 1
   test-force:
     name: Test force
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
         force: ["true", "false"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup cloe 1
         id: setup-cloe-1
         uses: ./
