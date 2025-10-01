@@ -59,7 +59,7 @@ jobs:
             "true"
       - name: Validate command
         run: |
-          [ "$(cloe hello-world.cloe 2>&1)" = '"Hello, world!"' ] || exit 1
+          [ "$(cloe hello-world.cloe 2>&1)" = "Hello, world!" ] || exit 1
   test-force:
     name: Test force
     runs-on: ubuntu-latest
