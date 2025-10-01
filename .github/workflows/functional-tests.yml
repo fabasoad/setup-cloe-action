@@ -30,7 +30,7 @@ jobs:
         os: ["ubuntu", "windows"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup cloe
         id: setup-cloe
         uses: ./
@@ -57,7 +57,7 @@ jobs:
         force: ["true", "false"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup cloe 1
         id: setup-cloe-1
         uses: ./
