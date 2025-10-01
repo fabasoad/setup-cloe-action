@@ -21,13 +21,25 @@ defaults:
 
 jobs:
   setup-cloe:
-    name: Setup cloe
-    runs-on: ${{ matrix.os }}-latest
-    timeout-minutes: 5
+    name: Setup cloe (${{ matrix.name }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "windows"]
+        include:
+          - name: Linux x86_64
+            runner: ubuntu-24.04
+          - name: Linux ARM
+            runner: ubuntu-24.04-arm
+          - name: Windows x86_64
+            runner: windows-2025
+          - name: Windows ARM
+            runner: windows-11-arm
+          - name: macOS x86_64
+            runner: macos-15-intel
+          - name: macOS ARM
+            runner: macos-26
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v5
@@ -50,7 +62,7 @@ jobs:
   test-force:
     name: Test force
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:

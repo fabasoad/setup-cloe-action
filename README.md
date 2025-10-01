@@ -14,11 +14,11 @@ This action installs a [Cloe](https://cloe-lang.org).
 | OS      | Arch   |                    |
 |---------|--------|--------------------|
 | Windows | x86_84 | :white_check_mark: |
-| Windows | arm    | :x:                |
+| Windows | arm    | :white_check_mark: |
 | Linux   | x86_84 | :white_check_mark: |
-| Linux   | arm    | :x:                |
+| Linux   | arm    | :white_check_mark: |
 | macOS   | x86_84 | :white_check_mark: |
-| macOS   | arm    | :x:                |
+| macOS   | arm    | :white_check_mark: |
 <!-- prettier-ignore-end -->
 
 ## Prerequisites
