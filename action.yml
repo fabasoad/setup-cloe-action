@@ -12,6 +12,11 @@ inputs:
       installs cloe in any case. Defaults to "false".
     required: false
     default: "false"
+  github-token:
+    description: |
+      Personal access token (PAT) used to fetch the cloe-lang/cloe repository.
+    required: false
+    default: "${{ github.token }}"
 outputs:
   installed:
     description: Whether cloe was installed or not.
@@ -36,11 +41,13 @@ runs:
 
     - name: Download Cloe
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
       with:
         repository: cloe-lang/cloe
         fetch-depth: 1
         path: ${{ steps.info.outputs.bin-dir }}
+        token: "${{ inputs.github-token }}"
+        persist-credentials: "false"
 
     - name: Setup Go
       if: steps.info.outputs.bin-installed == 'false' && steps.info.outputs.go-installed == 'false'

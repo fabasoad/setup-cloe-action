@@ -24,6 +24,8 @@ jobs:
     name: Setup cloe (${{ matrix.name }})
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -42,11 +44,15 @@ jobs:
             runner: macos-15
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: "false"
       - name: Setup cloe
         id: setup-cloe
         uses: ./
       - name: Test action completion
+        env:
+          STEP_SETUP_CLOE_OUTPUT_INSTALLED: "${{ steps.setup-cloe.outputs.installed }}"
         run: |
           test_equal() {
             if [ "${2}" != "${3}" ]; then
@@ -55,7 +61,7 @@ jobs:
             fi
           }
           test_equal "cloe should be installed" \
-            "${{ steps.setup-cloe.outputs.installed }}" \
+            "${STEP_SETUP_CLOE_OUTPUT_INSTALLED}" \
             "true"
       - name: Validate command
         run: |
@@ -64,13 +70,17 @@ jobs:
     name: Test force
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         force: ["true", "false"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: "false"
       - name: Setup cloe 1
         id: setup-cloe-1
         uses: ./
@@ -80,6 +90,9 @@ jobs:
         with:
           force: ${{ matrix.force }}
       - name: Test action completion
+        env:
+          STEP_SETUP_CLOE_1_OUTPUT_INSTALLED: "${{ steps.setup-cloe-1.outputs.installed }}"
+          STEP_SETUP_CLOE_2_OUTPUT_INSTALLED: "${{ steps.setup-cloe-2.outputs.installed }}"
         run: |
           test_equal() {
             if [ "${2}" != "${3}" ]; then
@@ -88,8 +101,8 @@ jobs:
             fi
           }
           test_equal "Wrong \"installed\" output from setup-cloe-1" \
-            "${{ steps.setup-cloe-1.outputs.installed }}" \
+            "${STEP_SETUP_CLOE_1_OUTPUT_INSTALLED}" \
             "true"
           test_equal "Wrong \"installed\" output from setup-cloe-2" \
-            "${{ steps.setup-cloe-2.outputs.installed }}" \
+            "${STEP_SETUP_CLOE_2_OUTPUT_INSTALLED}" \
             "${{ matrix.force }}"
